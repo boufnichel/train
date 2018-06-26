@@ -1,4 +1,4 @@
-package com.nespresso.exercises.train;
+package ma.lydec.exercises.train;
 
 public class Train {
 
