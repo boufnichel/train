@@ -1,4 +1,4 @@
-package com.nespresso.exercises.train;
+package ma.lydec.exercises.train;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,5 +13,4 @@ public class TrainTest {
         Train train = new Train("HPP");
         assertEquals("<HHHH::|OOOO|::|OOOO|", train.print());
     }
-
 }
