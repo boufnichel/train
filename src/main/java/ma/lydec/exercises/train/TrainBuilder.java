@@ -22,7 +22,12 @@ public final class TrainBuilder {
 		
 		for(int i = 1; i < trainDesign.length(); i++) {
 			train.append(AppConstants.SEPARTOR);
-			train.append(AppConstants.PASSENGER_DESIGN);
+			if(AppConstants.PASSENGER_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
+				train.append(AppConstants.PASSENGER_DESIGN);
+			} else if(AppConstants.RESTAURANT_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
+				train.append(AppConstants.RESTAURANT_DESIGN);
+			}
+			
 		}
 		
 		return train.toString();
