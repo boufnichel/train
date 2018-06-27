@@ -26,6 +26,8 @@ public final class TrainBuilder {
 				train.append(AppConstants.PASSENGER_DESIGN);
 			} else if(AppConstants.RESTAURANT_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
 				train.append(AppConstants.RESTAURANT_DESIGN);
+			} else if(AppConstants.HEAD_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
+				train.append(AppConstants.END_DESIGN);
 			}
 			
 		}
