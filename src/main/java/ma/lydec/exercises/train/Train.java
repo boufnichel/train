@@ -1,21 +1,19 @@
 package ma.lydec.exercises.train;
 
-import ma.lydec.exercises.train.exception.DesignException;
-
 public class Train {
 
-	private String trainDesign;
+	private TrainBuilder trainBuilder;
 	
 	public Train(String structure) {
-		trainDesign = structure;
+		trainBuilder = new TrainBuilder(structure);
+		trainBuilder.build();
 	}
 
 	public String print(){
-		try {
-			return new TrainBuilder(trainDesign).build();
-		} catch (DesignException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return trainBuilder.print();
+	}
+
+	public void detachEnd() {
+		trainBuilder.detachEnd();
 	}
 }

@@ -25,4 +25,13 @@ public class TrainTest {
         Train train = new Train("HPRPH");
         assertEquals("<HHHH::|OOOO|::|hThT|::|OOOO|::HHHH>", train.print());
     }
+    
+    @Test
+    public void modifyTrain() {
+        Train train = new Train("HPRPH");
+        train.detachEnd();
+        assertEquals("<HHHH::|OOOO|::|hThT|::|OOOO|", train.print());
+        train.detachEnd();
+        assertEquals("|OOOO|::|hThT|::|OOOO|", train.print());
+    }
 }

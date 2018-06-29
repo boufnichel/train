@@ -1,20 +1,19 @@
 package ma.lydec.exercises.train;
 
-import ma.lydec.exercises.train.exception.DesignException;
-
 public final class TrainBuilder {
 	
 	private String trainDesign;
+	private String train;
 	
 	public TrainBuilder(String trainDesign) {
 		this.trainDesign= trainDesign;
 	}
 	
-	public String build() throws DesignException {
+	public void build() {
 		
 		// throw exception if the design is not supported
 		if(!trainDesign.matches(AppConstants.TRAIN_ALLOWED_DESIGN)) {
-			throw new DesignException(AppConstants.DESIGN_ERROR_MESSAGE);
+			System.err.println(AppConstants.DESIGN_ERROR_MESSAGE);
 		}
 		
 		// build train
@@ -31,9 +30,20 @@ public final class TrainBuilder {
 			}
 			
 		}
-		
-		return train.toString();
-		
+		this.train = train.toString();
+	}
+	
+	public String print() {
+		return this.train;
+	}
+
+	public void detachEnd() {
+		if(trainDesign.endsWith(AppConstants.HEAD_CODE) && train.endsWith(AppConstants.END_DESIGN)) {
+			train = train.replace(AppConstants.SEPARTOR+AppConstants.END_DESIGN, AppConstants.EMPTY);
+		}
+		else if(trainDesign.startsWith(AppConstants.HEAD_CODE)) {
+			train = train.replace(AppConstants.HEAD_DESIGN+AppConstants.SEPARTOR, AppConstants.EMPTY);
+		}
 	}
 
 }
