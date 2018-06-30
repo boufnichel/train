@@ -9,7 +9,7 @@ public class Train {
 	}
 
 	public String print(){
-		return trainBuilder.print();
+		return trainBuilder.build();
 	}
 
 	public void detachEnd() {

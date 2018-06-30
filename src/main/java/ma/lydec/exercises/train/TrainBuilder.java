@@ -24,7 +24,7 @@ public final class TrainBuilder {
 	/**
 	 * Build train with all parts
 	 */
-	private String build() {
+	public String build() {
 		
 		// build train
 
@@ -38,18 +38,6 @@ public final class TrainBuilder {
 		return joiner.join(parts);
 	}
 	
-	
-	/**
-	 * print final train shape
-	 * 
-	 * @return - train' shape
-	 */
-	public String print() {
-		String trainShape = build();
-		System.out.println(trainShape);
-		return trainShape;
-	}
-
 	public void detachEnd() {
 		boolean isQueueExist = parts.get(parts.size()-1) instanceof End;
 		if(isQueueExist)
