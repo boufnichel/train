@@ -1,48 +1,107 @@
 package ma.lydec.exercises.train;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.google.common.base.Joiner;
+
 public final class TrainBuilder {
 	
 	private String trainDesign;
-	private String train;
+	private List<TrainPart> parts;
 	
 	public TrainBuilder(String trainDesign) {
 		this.trainDesign= trainDesign;
+		// verify design
+		verifyTrainDesign();
+		
+		// create train parts without content
+		createParts();
+		
 	}
 	
-	public void build() {
-		
-		// throw exception if the design is not supported
-		if(!trainDesign.matches(AppConstants.TRAIN_ALLOWED_DESIGN)) {
-			System.err.println(AppConstants.DESIGN_ERROR_MESSAGE);
-		}
+	/**
+	 * Build train with all parts
+	 */
+	private String build() {
 		
 		// build train
-		StringBuilder train = new StringBuilder(AppConstants.HEAD_DESIGN);
+
+		StringBuilder train = new StringBuilder();
 		
-		for(int i = 1; i < trainDesign.length(); i++) {
-			train.append(AppConstants.SEPARTOR);
-			if(AppConstants.PASSENGER_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
-				train.append(AppConstants.PASSENGER_DESIGN);
-			} else if(AppConstants.RESTAURANT_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
-				train.append(AppConstants.RESTAURANT_DESIGN);
-			} else if(AppConstants.HEAD_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
-				train.append(AppConstants.END_DESIGN);
-			}
-			
+		for(Iterator<TrainPart> trainPartIterator = parts.iterator(); trainPartIterator.hasNext();) {
+			train.append(trainPartIterator.next());
 		}
-		this.train = train.toString();
+		
+		Joiner joiner = Joiner.on(AppConstants.SEPARTOR);
+		return joiner.join(parts);
 	}
 	
+	
+	/**
+	 * print final train shape
+	 * 
+	 * @return - train' shape
+	 */
 	public String print() {
-		return this.train;
+		String trainShape = build();
+		System.out.println(trainShape);
+		return trainShape;
 	}
 
 	public void detachEnd() {
-		if(trainDesign.endsWith(AppConstants.HEAD_CODE) && train.endsWith(AppConstants.END_DESIGN)) {
-			train = train.replace(AppConstants.SEPARTOR+AppConstants.END_DESIGN, AppConstants.EMPTY);
+		boolean isQueueExist = parts.get(parts.size()-1) instanceof End;
+		if(isQueueExist)
+			parts.remove(parts.size()-1);
+		else {
+			parts.remove(0);
 		}
-		else if(trainDesign.startsWith(AppConstants.HEAD_CODE)) {
-			train = train.replace(AppConstants.HEAD_DESIGN+AppConstants.SEPARTOR, AppConstants.EMPTY);
+	}
+
+	public boolean fill() {
+		for(Iterator<TrainPart> trainPartIterator = parts.iterator(); trainPartIterator.hasNext();) {
+			TrainPart trainPart = trainPartIterator.next();
+			if(trainPart instanceof Fillable ) {
+				Fillable fillable = ((Fillable) trainPart);
+				if(!fillable.isFilled()) {
+					fillable.fill();
+					break;
+				}
+			}
+		}
+		
+		
+		return false;
+	}
+	
+	private void createParts() {
+		// build train parts
+		parts = new ArrayList<>();
+		for(int i = 0; i < trainDesign.length(); i++) {
+			if(AppConstants.HEAD_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
+				if(i == 0) {
+					parts.add(new Head());
+				} else {
+					parts.add(new End());
+				}
+			} 
+			else if(AppConstants.PASSENGER_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
+				parts.add(new PassengerPart());
+			} 
+			else if(AppConstants.RESTAURANT_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
+				parts.add(new Restaurant());
+			} 
+			else if(AppConstants.CARGO_CODE.equals(String.valueOf(trainDesign.charAt(i)))) {
+				parts.add(new Cargo());
+			} 
+			
+		}
+	}
+	private void verifyTrainDesign() {
+		// log error if the design is not supported
+		if(!TrainDesignVerifier.isDesignValid(trainDesign)) {
+			System.err.println(AppConstants.DESIGN_ERROR_MESSAGE);
 		}
 	}
 

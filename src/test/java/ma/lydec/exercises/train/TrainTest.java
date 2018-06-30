@@ -1,10 +1,9 @@
 package ma.lydec.exercises.train;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
-
-import ma.lydec.exercises.train.Train;
 
 public class TrainTest {
 
@@ -33,5 +32,18 @@ public class TrainTest {
         assertEquals("<HHHH::|OOOO|::|hThT|::|OOOO|", train.print());
         train.detachEnd();
         assertEquals("|OOOO|::|hThT|::|OOOO|", train.print());
+    }
+    
+    @Test
+    public void cargoTrain() {
+        Train train = new Train("HCCC");
+        assertEquals("<HHHH::|____|::|____|::|____|", train.print());
+        train.fill();
+        assertEquals("<HHHH::|^^^^|::|____|::|____|", train.print());
+        train.fill();
+        assertEquals("<HHHH::|^^^^|::|^^^^|::|____|", train.print());
+        train.fill();
+        assertEquals("<HHHH::|^^^^|::|^^^^|::|^^^^|", train.print());
+        assertFalse(train.fill());
     }
 }
