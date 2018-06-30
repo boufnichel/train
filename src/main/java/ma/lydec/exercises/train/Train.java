@@ -6,7 +6,6 @@ public class Train {
 	
 	public Train(String structure) {
 		trainBuilder = new TrainBuilder(structure);
-		trainBuilder.build();
 	}
 
 	public String print(){
@@ -15,5 +14,9 @@ public class Train {
 
 	public void detachEnd() {
 		trainBuilder.detachEnd();
+	}
+
+	public boolean fill() {
+		return trainBuilder.fill();
 	}
 }
