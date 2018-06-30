@@ -46,4 +46,21 @@ public class TrainTest {
         assertEquals("<HHHH::|^^^^|::|^^^^|::|^^^^|", train.print());
         assertFalse(train.fill());
     }
+    
+    @Test
+    public void cargoTrainComplexTest() {
+        Train train = new Train("HPPRCCPPCH");
+        assertEquals("<HHHH::|OOOO|::|OOOO|::|hThT|::|____|::|____|::|OOOO|::|OOOO|::|____|::HHHH>", train.print());
+        train.fill();
+        assertEquals("<HHHH::|OOOO|::|OOOO|::|hThT|::|^^^^|::|____|::|OOOO|::|OOOO|::|____|::HHHH>", train.print());
+        train.fill();
+        assertEquals("<HHHH::|OOOO|::|OOOO|::|hThT|::|^^^^|::|^^^^|::|OOOO|::|OOOO|::|____|::HHHH>", train.print());
+        train.fill();
+        assertEquals("<HHHH::|OOOO|::|OOOO|::|hThT|::|^^^^|::|^^^^|::|OOOO|::|OOOO|::|^^^^|::HHHH>", train.print());
+        assertFalse(train.fill());
+        train.detachEnd();
+        assertEquals("<HHHH::|OOOO|::|OOOO|::|hThT|::|^^^^|::|^^^^|::|OOOO|::|OOOO|::|^^^^|", train.print());
+        train.detachEnd();
+        assertEquals("|OOOO|::|OOOO|::|hThT|::|^^^^|::|^^^^|::|OOOO|::|OOOO|::|^^^^|", train.print());
+    }
 }
