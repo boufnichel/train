@@ -86,6 +86,7 @@ public final class TrainBuilder {
 			
 		}
 	}
+	
 	private void verifyTrainDesign() {
 		// log error if the design is not supported
 		if(!TrainDesignVerifier.isDesignValid(trainDesign)) {
